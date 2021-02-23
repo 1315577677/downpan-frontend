@@ -379,9 +379,11 @@
 				};
 				// 创建上传任务
 				this.$store.dispatch('createUploadJob', obj)
-				// 上传
-				console.log(this.file_id);
-				this.$H.upload(`/file/upload?file_id=${this.file_id}`, {
+				let temp = '.root'
+				this.dirs.forEach(item => {
+					temp += `.${item.name}`
+				})
+				this.$H.upload(`/file/upload/${temp}`, {
 					filePath: file.path
 				}, (p) => { // p:进度
 					// 更新任务进度
@@ -431,11 +433,6 @@
 						count: 9,
 						success: (res) => {
 							res.tempFiles.forEach(item => {
-								console.log(item,'333')
-								console.log(item.mimeType)
-								if(item.type.indexOf('text') != -1) type = 'text'
-								if(item.type.indexOf('video') != -1) type = 'video'
-								if(item.type.indexOf('image') != -1) type = 'image'
 								this.upload(item, type)
 							})
 						}
