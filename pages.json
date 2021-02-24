@@ -45,8 +45,14 @@
 				"enablePullDownRefresh": false
 			}
 
-		}
+		},{
+			"path": "pages/text/text",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
 
+		}
 	    ,{
             "path" : "pages/setting/setting",
             "style" :                                                                                    

@@ -207,30 +207,30 @@
 			// 获取当前用户网盘文件信息
 			getData() {
 				let orderby = this.sortOptions[this.sortIndex].key;
-				this.$H.get(`/file/getData?file_id=${this.file_id}&orderby=${orderby}`, {
+				this.$H.get(`/file/getData/${this.toPath()}/${orderby}`, {
 					token: true
 				}).then(res => {
-					this.list = this.formatList(res.data)
+					this.list = res.data
 				})
 			},
-			// 格式化对象数据
-			formatList(list) {
-				console.log(list)
-				list = JSON.parse(list)
-				return list.map(item => {
-					let type = "none"
-					if (item.isdir === 1) {
-						type = 'dir'
-					} else {
-						type = (item.ext.split('/'))[0] || 'none'
-					}
-					return {
-						type,
-						checked: false,
-						...item
-					}
-				})
-			},
+			// // 格式化对象数据
+			// formatList(list) {
+			// 	// console.log(list)
+			// 	// list = JSON.parse(list)
+			// 	return list.map(item => {
+			// 		let type = "none"
+			// 		if (item.isdir === 1) {
+			// 			type = 'dir'
+			// 		} else {
+			// 			type = item.realType
+			// 		}
+			// 		return {
+			// 			type,
+			// 			checked: false,
+			// 			...item
+			// 		}
+			// 	})
+			// },
 			// 点击选择
 			select(e) {
 				this.list[e.index].checked = e.value;
@@ -301,6 +301,13 @@
 				});
 				// 取消选中
 				this.handleCheckAll(false)
+			},
+			toPath() {
+				let temp = '.root';
+				this.dirs.forEach(item => {
+					if (item.name) temp += `.${item.name}`
+				})
+				return temp;
 			},
 			// 底部操作栏事件
 			handleBottomEvent(e) {
@@ -379,18 +386,15 @@
 				};
 				// 创建上传任务
 				this.$store.dispatch('createUploadJob', obj)
-				let temp = '.root'
-				this.dirs.forEach(item => {
-					temp += `.${item.name}`
-				})
-				this.$H.upload(`/file/upload/${temp}`, {
+
+				this.$H.upload(`/file/upload/${this.toPath()}`, {
 					filePath: file.path
 				}, (p) => { // p:进度
 					// 更新任务进度
 					this.$store.dispatch('updateUploadJob', {
 						states: true,
 						progress: p,
-						key 
+						key
 					})
 				}).then(res => {
 					this.getData()
@@ -403,7 +407,7 @@
 			// 底部弹出操作框 
 			handleAddEvent(e) {
 				this.$refs.addDialog.close();
-				if(e.name === '新建文件夹' ){
+				if (e.name === '新建文件夹') {
 					this.$refs.dirDialog.open(close => {
 						if (this.dirname == '') {
 							return uni.showToast({
@@ -412,10 +416,7 @@
 							})
 						}
 						// 请求服务器：创建
-						this.$H.post('/file/createdir', {
-							file_id: this.file_id,
-							name: this.dirname
-						}, {
+						this.$H.get(`/file/createDir/${this.toPath()}/${this.dirname}`, {
 							token: true
 						}).then(res => {
 							this.getData();
@@ -427,8 +428,8 @@
 						close();
 						this.dirname = ''
 					})
-				}else{
-					let type  = 'none'
+				} else {
+					let type = 'none'
 					uni.chooseFile({
 						count: 9,
 						success: (res) => {
@@ -454,6 +455,17 @@
 						// 视频播放
 						uni.navigateTo({
 							url: "../video/video?url=" + e.url + "&title=" + e.name
+						})
+						break;
+					case 'none':
+						uni.showToast({
+							title: "暂不支持查看此格式",
+							icon: 'none'
+						});
+						break;
+					case 'text':
+						uni.navigateTo({
+							url: "../text/text?url=" + e.url + "&title=" + e.name
 						})
 						break;
 					default: // 文件夹
@@ -492,10 +504,10 @@
 			// 搜索框变化
 			search(e) {
 				if (e.detail.value === '') return this.getData();
-				this.$H.get(`/file/search?keyword=${e.detail.value}`, {
+				this.$H.get(`/file/search/${e.detail.value}`, {
 					token: true
 				}).then(res => {
-					this.list = this.formatList(res.rows)
+					this.list = res.data
 				})
 			}
 		}
