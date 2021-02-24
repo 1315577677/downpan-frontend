@@ -1,4 +1,5 @@
 <template>
+	
 	<view>
 		<view class="mx-3 mt-4 bg-main text-white flex align-center justify-center font-lg rounded-circle" hover-class="bg-main-hover"
 		 @click="logout">

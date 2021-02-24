@@ -160,6 +160,7 @@
 		computed: {
 			// 选中列表
 			checkList() {
+				console.log(this.list.filter(item => item.checked),'filter')
 				return this.list.filter(item => item.checked);
 			},
 			// 底部菜单
@@ -210,30 +211,23 @@
 				this.$H.get(`/file/getData/${this.toPath()}/${orderby}`, {
 					token: true
 				}).then(res => {
-					this.list = res.data
+					this.list = this.formatList(res.data)
 				})
 			},
-			// // 格式化对象数据
-			// formatList(list) {
-			// 	// console.log(list)
-			// 	// list = JSON.parse(list)
-			// 	return list.map(item => {
-			// 		let type = "none"
-			// 		if (item.isdir === 1) {
-			// 			type = 'dir'
-			// 		} else {
-			// 			type = item.realType
-			// 		}
-			// 		return {
-			// 			type,
-			// 			checked: false,
-			// 			...item
-			// 		}
-			// 	})
-			// },
-			// 点击选择
+			// 格式化对象数据
+			formatList(list) {
+				// console.log(list)
+				// list = JSON.parse(list)
+				return list.map(item => {
+					return {
+						checked: false,
+						...item
+					}
+				})
+			},
 			select(e) {
 				this.list[e.index].checked = e.value;
+				
 			},
 			// 全选/取消全选按钮
 			handleCheckAll(check) {
@@ -431,7 +425,7 @@
 				} else {
 					let type = 'none'
 					uni.chooseFile({
-						count: 9,
+						count: 50,
 						success: (res) => {
 							res.tempFiles.forEach(item => {
 								this.upload(item, type)

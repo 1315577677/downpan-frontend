@@ -60,6 +60,7 @@
 		},
 		methods: {
 			select() {
+				console.log(this.item,'item')
 				this.$emit("select", {
 					index: this.index,
 					value: !this.item.checked
