@@ -21,7 +21,7 @@ export default {
 		options.method = options.method || this.common.method
 		options.dataType = options.dataType || this.common.dataType
 		options.token = options.token === true ? true : this.common.token
-
+		console.log(options.url)
 		// 请求
 		return new Promise((res, rej) => {
 			// 请求之前验证...
@@ -132,7 +132,7 @@ export default {
 				filePath: data.filePath,
 				name: data.name || "files",
 				header: {
-					token
+					'token':token
 				},
 				formData: data.formData || {},
 				success: (res) => {
