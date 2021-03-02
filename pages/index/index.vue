@@ -134,16 +134,6 @@
 					key: 'createdTime'
 				}],
 				addList: [
-					// {
-					// 	icon: "icon-file-b-6",
-					// 	color: "text-success",
-					// 	name: "上传图片"
-					// },
-					// {
-					// 	icon: "icon-file-b-9",
-					// 	color: "text-primary",
-					// 	name: "上传视频"
-					// },
 					{
 						icon: "icon-file-b-8",
 						color: "text-muted",
@@ -160,7 +150,6 @@
 		computed: {
 			// 选中列表
 			checkList() {
-				console.log(this.list.filter(item => item.checked),'filter')
 				return this.list.filter(item => item.checked);
 			},
 			// 底部菜单
@@ -174,19 +163,37 @@
 						name: "删除"
 					}]
 				}
+				if(this.checkList[0].type  === 'zip'){
+					return [{
+								icon: "icon-xiazai",
+								name: "下载"
+							}, {
+								icon: "icon-fenxiang-1",
+								name: "分享"
+							}, {
+								icon: "icon-shanchu",
+								name: "删除"
+							}, {
+								icon: "icon-chongmingming",
+								name: "重命名"
+							}, {
+								icon: "icon-file-b-4",
+								name: "解压"
+							}]
+				}
 				return [{
-					icon: "icon-xiazai",
-					name: "下载"
-				}, {
-					icon: "icon-fenxiang-1",
-					name: "分享"
-				}, {
-					icon: "icon-shanchu",
-					name: "删除"
-				}, {
-					icon: "icon-chongmingming",
-					name: "重命名"
-				}]
+							icon: "icon-xiazai",
+							name: "下载"
+						}, {
+							icon: "icon-fenxiang-1",
+							name: "分享"
+						}, {
+							icon: "icon-shanchu",
+							name: "删除"
+						}, {
+							icon: "icon-chongmingming",
+							name: "重命名"
+						}]
 			},
 			file_id() { // 当前目录
 				let l = this.dirs.length
@@ -355,8 +362,10 @@
 						})
 						break;
 					case '分享':
-
 						break;
+					case '解压':
+						this.unzip();
+					break;
 					case '下载':
 						this.download()
 						break;
@@ -365,6 +374,16 @@
 			// 右上角添加按钮
 			openAdd() {
 				this.$refs.addDialog.open()
+			},
+			unzip(){
+				this.$H.get(`/file/unzip/${this.toPath()}/${this.checkList[0].name}`, {
+					token: true
+				}).then(res => {
+					uni.showToast({
+						title: res.message,
+						icon: 'none'
+					});
+				})
 			},
 			// 上传图片/文件
 			upload(file, type) {
@@ -461,6 +480,8 @@
 						uni.navigateTo({
 							url: "../text/text?url=" + e.url + "&title=" + e.name
 						})
+						break;
+					case 'zip':
 						break;
 					default: // 文件夹
 						this.dirs.push({

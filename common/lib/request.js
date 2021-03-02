@@ -153,7 +153,6 @@ export default {
 			})
 
 			uploadTask.onProgressUpdate((res) => {
-				console.log(res.progress)
 				if (typeof onProgress === 'function') {
 					onProgress(res.progress)
 				}

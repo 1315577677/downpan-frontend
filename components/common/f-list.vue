@@ -42,6 +42,14 @@
 			value: "icon-file-b-8",
 			color: 'text-muted'
 		},
+		audio: {
+			value: "icon-file-b-3",
+			color: 'text-muted'
+		},
+		zip: {
+			value: "icon-file-b-4",
+			color: 'text-info'
+		},
 	};
 	export default {
 		props: {
