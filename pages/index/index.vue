@@ -133,8 +133,7 @@
 					name: '按时间排序',
 					key: 'createdTime'
 				}],
-				addList: [
-					{
+				addList: [{
 						icon: "icon-file-b-8",
 						color: "text-muted",
 						name: "上传文件"
@@ -163,37 +162,37 @@
 						name: "删除"
 					}]
 				}
-				if(this.checkList[0].type  === 'zip'){
+				if (this.checkList[0].type === 'zip') {
 					return [{
-								icon: "icon-xiazai",
-								name: "下载"
-							}, {
-								icon: "icon-fenxiang-1",
-								name: "分享"
-							}, {
-								icon: "icon-shanchu",
-								name: "删除"
-							}, {
-								icon: "icon-chongmingming",
-								name: "重命名"
-							}, {
-								icon: "icon-file-b-4",
-								name: "解压"
-							}]
+						icon: "icon-xiazai",
+						name: "下载"
+					}, {
+						icon: "icon-fenxiang-1",
+						name: "分享"
+					}, {
+						icon: "icon-shanchu",
+						name: "删除"
+					}, {
+						icon: "icon-chongmingming",
+						name: "重命名"
+					}, {
+						icon: "icon-file-b-4",
+						name: "解压"
+					}]
 				}
 				return [{
-							icon: "icon-xiazai",
-							name: "下载"
-						}, {
-							icon: "icon-fenxiang-1",
-							name: "分享"
-						}, {
-							icon: "icon-shanchu",
-							name: "删除"
-						}, {
-							icon: "icon-chongmingming",
-							name: "重命名"
-						}]
+					icon: "icon-xiazai",
+					name: "下载"
+				}, {
+					icon: "icon-fenxiang-1",
+					name: "分享"
+				}, {
+					icon: "icon-shanchu",
+					name: "删除"
+				}, {
+					icon: "icon-chongmingming",
+					name: "重命名"
+				}]
 			},
 			file_id() { // 当前目录
 				let l = this.dirs.length
@@ -234,7 +233,7 @@
 			},
 			select(e) {
 				this.list[e.index].checked = e.value;
-				
+
 			},
 			// 全选/取消全选按钮
 			handleCheckAll(check) {
@@ -304,9 +303,9 @@
 				this.handleCheckAll(false)
 			},
 			toPath() {
-				let temp = '.root';
+				let temp = '%26root';
 				this.dirs.forEach(item => {
-					if (item.name) temp += `.${item.name}`
+					if (item.name) temp += `%26${item.name}`
 				})
 				return temp;
 			},
@@ -365,7 +364,7 @@
 						break;
 					case '解压':
 						this.unzip();
-					break;
+						break;
 					case '下载':
 						this.download()
 						break;
@@ -375,7 +374,7 @@
 			openAdd() {
 				this.$refs.addDialog.open()
 			},
-			unzip(){
+			unzip() {
 				this.$H.get(`/file/unzip/${this.toPath()}/${this.checkList[0].name}`, {
 					token: true
 				}).then(res => {
