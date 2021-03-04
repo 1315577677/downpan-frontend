@@ -24,7 +24,7 @@ export default new Vuex.Store({
 		logout({
 			state
 		}) {
-			$H.post('/logout', {}, {
+			$H.post('/user/logout', {}, {
 				token: true
 			})
 			state.user = null;

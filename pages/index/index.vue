@@ -170,11 +170,11 @@
 						icon: "icon-fenxiang-1",
 						name: "分享"
 					}, {
-						icon: "icon-shanchu",
-						name: "删除"
-					}, {
 						icon: "icon-chongmingming",
 						name: "重命名"
+					}, {
+						icon: "icon-shanchu",
+						name: "删除"
 					}, {
 						icon: "icon-file-b-4",
 						name: "解压"
@@ -187,11 +187,11 @@
 					icon: "icon-fenxiang-1",
 					name: "分享"
 				}, {
-					icon: "icon-shanchu",
-					name: "删除"
-				}, {
 					icon: "icon-chongmingming",
 					name: "重命名"
+				}, {
+					icon: "icon-shanchu",
+					name: "删除"
 				}]
 			},
 			file_id() { // 当前目录
@@ -363,6 +363,27 @@
 					case '分享':
 						break;
 					case '解压':
+				
+						uni.showLoading({
+							title: '正在解压...',
+							mask: false
+						})
+						let ids = (this.checkList.map(item => item.id)).join(',')
+						
+						this.$H.get(`/file/unzip/${this.toPath()}/${this.checkList[0].name}`, {
+							token: true
+						}).then(res => {
+							uni.showToast({
+								title: res.message,
+								icon: 'none'
+							})
+							this.getData()
+							uni.hideLoading()
+							}).catch(err => {
+							uni.hideLoading()
+						})
+						close()
+				
 						this.unzip();
 						break;
 					case '下载':
@@ -374,16 +395,7 @@
 			openAdd() {
 				this.$refs.addDialog.open()
 			},
-			unzip() {
-				this.$H.get(`/file/unzip/${this.toPath()}/${this.checkList[0].name}`, {
-					token: true
-				}).then(res => {
-					uni.showToast({
-						title: res.message,
-						icon: 'none'
-					});
-				})
-			},
+
 			// 上传图片/文件
 			upload(file, type) {
 				const key = this.getID(8)
