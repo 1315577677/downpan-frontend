@@ -2,10 +2,12 @@
 	<!-- 列表项 -->
 	<view>
 		<view class="px-3 py-2 flex align-center border-bottom border-light-secondary" hover-class="bg-light" @click="$emit('click')">
-			<text class="iconfont" :class="iconClass" style="font-size:60rpx;"></text>
+			<image v-if="type=='friends'" src="/static/14.jpg" class="rounded-circle flex-shrink mr-3" style="width: 120rpx;height: 120rpx;"></image>
+			<text v-else class="iconfont" :class="iconClass" style="font-size:60rpx;"></text>
+			
 			<view class="flex flex-column ml-3" style="line-height: 1.2;max-width: 500rpx;">
 				<text class="font-md mb-1 text-ellipsis">{{item.name}}</text>
-				<text class="font-sm text-muted">{{item.createTime}}</text>
+				<text v-if="type=='index'" class="font-sm text-muted">{{item.createTime}}</text>
 			</view>
 			<view v-if="showRight" class="ml-auto">
 				<slot>
@@ -58,7 +60,11 @@
 			showRight: {
 				type: Boolean,
 				default: true
-			}
+			},
+			type: {
+				type: String,
+				default: "index"
+			},
 		},
 		computed: {
 			iconClass() {

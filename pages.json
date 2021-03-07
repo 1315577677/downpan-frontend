@@ -14,6 +14,13 @@
 					"titleNView": false
 				}
 			}
+		},{
+			"path": "pages/friends/friends",
+			"style": {
+				"app-plus": {
+					"titleNView": false
+				}
+			}
 		}, {
 			"path": "pages/list/list",
 			"style": {
@@ -38,7 +45,16 @@
 				"navigationBarTitleText": "个人中心",
 				"enablePullDownRefresh": false
 			}
-		}, {
+		},
+		{
+			"path": "pages/chat/chat",
+			"style": {
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
 			"path": "pages/video/video",
 			"style": {
 				"navigationBarTitleText": "",
@@ -81,9 +97,14 @@
 			"selectedIconPath": "static/tabbar/index-select.png"
 		}, {
 			"pagePath": "pages/list/list",
-			"text": "传输",
+			"text": "传输列表",
 			"iconPath": "static/tabbar/list.png",
 			"selectedIconPath": "static/tabbar/list-select.png"
+		}, {
+			"pagePath": "pages/friends/friends",
+			"text": "好友",
+			"iconPath": "static/tabbar/friends.png",
+			"selectedIconPath": "static/tabbar/friends-select.png"
 		}, {
 			"pagePath": "pages/my/my",
 			"text": "我的",

@@ -363,7 +363,6 @@
 					case '分享':
 						break;
 					case '解压':
-				
 						uni.showLoading({
 							title: '正在解压...',
 							mask: false
@@ -383,8 +382,6 @@
 							uni.hideLoading()
 						})
 						close()
-				
-						this.unzip();
 						break;
 					case '下载':
 						this.download()

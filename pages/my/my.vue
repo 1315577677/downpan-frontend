@@ -1,13 +1,13 @@
 <template>
 	<view>
 		<view class="p-3 flex align-center">
-			<image src="/static/14.jpg" class="rounded-circle flex-shrink mr-3" style="width: 120rpx;height: 120rpx;"></image>
+			<image :src="user.url" class="rounded-circle flex-shrink mr-3" style="width: 120rpx;height: 120rpx;"></image>
 			<view class="flex-1 flex flex-column text-muted font">
 				<view class="flex align-end">
-					<text class="font-lg text-dark mr-2">{{user.nickname||user.username}}</text>
+					<text class="font-lg text-dark mr-2">{{user.name}}</text>
 					<text class="font-md pb-0">{{user.sex}}</text>
 				</view>
-				<text class="text-ellipsis">{{user.desc||'no desc'}}</text>
+				<text class="text-ellipsis">{{user.username}}</text>
 			</view>
 		</view>
 		<view class="f-divider"></view>
@@ -44,6 +44,7 @@
 			// 	user: state => state.user
 			// }),
 			user(){
+				this.$store.state.user.url = this.$store.state.user.url? this.$store.state.user.url:'/static/14.jpg'
 				console.log(this.$store.state)
 				return this.$store.state.user
 			},
@@ -70,7 +71,7 @@
 				this.$H.get('/user/getUserInfo', {
 					token: true
 				}).then(res => {
-					this.$store.dispatch('updateSize', res)
+					this.$store.dispatch('updateInfo', res)
 				})
 			}
 		}

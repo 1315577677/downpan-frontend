@@ -45,11 +45,12 @@ export default new Vuex.Store({
 				state.token = uni.getStorageSync('token')
 			}
 		},
-		updateSize({
+		updateInfo({
 			state
 		}, e) {
 			state.user.capacity = e.data.capacity
 			state.user.used = e.data.used
+			state.user.name = e.data.name
 		},
 		// 创建上传任务
 		createUploadJob({
