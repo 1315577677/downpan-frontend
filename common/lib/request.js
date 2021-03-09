@@ -70,6 +70,7 @@ export default {
 					if (result.data.code === 100002) {
 						// 退出登录操作
 						$store.dispatch('logout')
+						this.socket.disconnect()
 						uni.showToast({
 							title: result.data.message || '服务端失败',
 							icon: 'none'

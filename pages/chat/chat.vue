@@ -129,18 +129,17 @@
 			this.fid = e.id;
 			this.name = e.name;
 			this.fimg = e.img;
-			this.getStorage();
 			this.getMsgs();
 			this.recevieMsg()
 			//socket模块 state表示位置0在首页，1在聊天页（用于后台判断数据存放的未读和已读）需要在离开聊天时再次调用
-			this.socketJoin(this.uid,1)
+			// this.socketJoin(this.uid,1)
 		},
 		
 		methods: {
 			//socket模块
-			socketJoin(uid,state){
-				this.socket.emit('login',uid,state)
-			},
+			// socketJoin(uid,state){
+			// 	this.socket.emit('login',uid)
+			// },
 			//上传消息
 			sendMsg(msgs,fromId,toId){
 				this.socket.emit('handleMsg',msgs,fromId,toId)

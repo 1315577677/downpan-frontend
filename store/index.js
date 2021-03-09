@@ -31,7 +31,6 @@ export default new Vuex.Store({
 			state.token = null;
 			uni.removeStorageSync('user');
 			uni.removeStorageSync('token');
-
 			uni.reLaunch({
 				url: "/pages/login/login"
 			})
@@ -50,7 +49,6 @@ export default new Vuex.Store({
 		}, e) {
 			state.user.capacity = e.data.capacity
 			state.user.used = e.data.used
-			state.user.name = e.data.name
 		},
 		// 创建上传任务
 		createUploadJob({
