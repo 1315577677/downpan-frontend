@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="p-3 flex align-center">
-			<image :src="user.url" class="rounded-circle flex-shrink mr-3" style="width: 120rpx;height: 120rpx;"></image>
+			<image :src="user.imgUrl" class="rounded-circle flex-shrink mr-3" style="width: 120rpx;height: 120rpx;"></image>
 			<view class="flex-1 flex flex-column text-muted font">
 				<view class="flex align-end">
 					<text class="font-lg text-dark mr-2">{{user.name}}</text>

@@ -81,8 +81,12 @@
 			let dirs = uni.getStorageSync('dirs');
 			if (dirs) this.dirs = JSON.parse(dirs); // 有上次的操作状态则获取
 			this.getData();
+			this.socketJoin(this.$store.state.user.username,0)
 		},
 		methods: {
+			socketJoin(uid,state){
+				this.socket.emit('login',uid,state)
+			},
 			// 获取当前用户好友信息
 			getData() {
 				this.$H.get("/user/getFriends", {
@@ -165,7 +169,7 @@
 			// 列表点击事件
 			doEvent(e) {
 				uni.navigateTo({
-					url: "../chat/chat"
+					url: "../chat/chat?fid=" + e.username +"&imgUrl=" + e.imgUrl +"&name=" + e.name
 				})
 			},
 		}

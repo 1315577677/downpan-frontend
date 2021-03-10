@@ -2,7 +2,7 @@
 	<!-- 列表项 -->
 	<view>
 		<view class="px-3 py-2 flex align-center border-bottom border-light-secondary" hover-class="bg-light" @click="$emit('click')">
-			<image v-if="type=='friends'" src="/static/14.jpg" class="rounded-circle flex-shrink mr-3" style="width: 120rpx;height: 120rpx;"></image>
+			<image v-if="type=='friends'" :src="item.imgUrl" class="rounded-circle flex-shrink mr-3" style="width: 120rpx;height: 120rpx;"></image>
 			<text v-else class="iconfont" :class="iconClass" style="font-size:60rpx;"></text>
 			
 			<view class="flex flex-column ml-3" style="line-height: 1.2;max-width: 500rpx;">

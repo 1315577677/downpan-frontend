@@ -126,20 +126,20 @@
 		},
 		*/
 		onLoad(e) {
-			this.fid = e.id;
+			this.fid = e.fid;
 			this.name = e.name;
-			this.fimg = e.img;
+			this.fimg = e.imgUrl;
 			this.getMsgs();
 			this.recevieMsg()
 			//socket模块 state表示位置0在首页，1在聊天页（用于后台判断数据存放的未读和已读）需要在离开聊天时再次调用
-			// this.socketJoin(this.uid,1)
+			this.socketJoin(this.$store.state.user.username,1)
 		},
 		
 		methods: {
 			//socket模块
-			// socketJoin(uid,state){
-			// 	this.socket.emit('login',uid)
-			// },
+			socketJoin(uid,state){
+				this.socket.emit('login',uid,state)
+			},
 			//上传消息
 			sendMsg(msgs,fromId,toId){
 				this.socket.emit('handleMsg',msgs,fromId,toId)
@@ -149,16 +149,16 @@
 				this.socket.on('dealMsg',(msgs,id,t)=>{
 					//判断发送者，防止多人给自己发消息会信息错位 (此方法后端发送两次fromId不同)
 					//(后面的判断主要是优化首页时自己给自己发消息会发送两次解决 t=1为好友发送)
-					if(id == this.fid&&t==1){
+				//	if(id == this.fid&&t==1){
 						console.log(2)
-						if(msgs.type==2||msgs.type==3){
-							msgs.message=JSON.parse(msgs.message)
-						}
-						this.scrollAnimation=true;
-						//发送图片则添加到预览队列
-						if (msgs.type == 1) {
-							this.imgsPath.push(msgs.message)
-						}
+						// if(msgs.type==2||msgs.type==3){
+						// 	msgs.message=JSON.parse(msgs.message)
+						// }
+						// this.scrollAnimation=true;
+						// //发送图片则添加到预览队列
+						// if (msgs.type == 1) {
+						// 	this.imgsPath.push(msgs.message)
+						// }
 						this.message.push(msgs);
 						this.message.map((v, i) => {
 							let delay = 0;
@@ -173,7 +173,7 @@
 						this.$nextTick(function() {
 							this.scrollTarget = 'msg-' + this.message[this.message.length - 1].id
 						}) 
-					}
+					//}
 				})
 				
 			},
@@ -329,7 +329,7 @@
 					copyMsg.message = JSON.stringify(copyMsg.message)
 				}
 				//发送至服务器
- 				this.sendMsg(copyMsg,this.uid,this.fid)
+ 				this.sendMsg(copyMsg,this.$store.state.user.username,this.fid)
 			},
 			// 动态改变padding值,防止消息被弹起的表情页或add页覆盖
 			getHeight(e) {
