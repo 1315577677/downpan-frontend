@@ -43,7 +43,7 @@
 							</view>
 						</view>
 						<view class="msg msg_right" v-else>
-							<image :src="imgUrl" mode="" class="head_pic"></image>
+							<image :src="img" mode="" class="head_pic"></image>
 							<view class="msg_info" v-if="item.type==0">{{item.message}}</view>
 							<image :src="item.message" mode="aspectFill" v-if="item.type==1" class="msg_img" @tap="previewImg(item.message)"></image>
 							<view class="msg_info msg_voice" v-if="item.type==2" :style="{width:item.message.time/30*225+'px'}" @tap="playRecord(item.message.voicePath)">
@@ -129,6 +129,7 @@
 			this.fid = e.fid;
 			this.name = e.name;
 			this.fimg = e.imgUrl;
+			this.img = this.$store.state.user.imgUrl
 			this.getMsgs();
 			this.recevieMsg()
 			//socket模块 state表示位置0在首页，1在聊天页（用于后台判断数据存放的未读和已读）需要在离开聊天时再次调用
@@ -149,7 +150,7 @@
 				this.socket.on('dealMsg',(msgs,id,t)=>{
 					//判断发送者，防止多人给自己发消息会信息错位 (此方法后端发送两次fromId不同)
 					//(后面的判断主要是优化首页时自己给自己发消息会发送两次解决 t=1为好友发送)
-				//	if(id == this.fid&&t==1){
+					if(id == this.fid&&t==1){
 						console.log(2)
 						// if(msgs.type==2||msgs.type==3){
 						// 	msgs.message=JSON.parse(msgs.message)
@@ -173,7 +174,7 @@
 						this.$nextTick(function() {
 							this.scrollTarget = 'msg-' + this.message[this.message.length - 1].id
 						}) 
-					//}
+					}
 				})
 				
 			},
